@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kenangan Kenduri – Prototaip</title>
+<style>
+:root{--bg:#fbf6ef;--card:#fff;--tx:#2b2320;--mut:#7a6d64;--ac:#b5533c;--ac2:#f3e3d6;--bd:#e8dccf;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1d1816;--card:#2a2320;--tx:#f3ebe4;--mut:#b3a69c;--ac:#e08a72;--ac2:#3b2d27;--bd:#41352f;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#1d1816;--card:#2a2320;--tx:#f3ebe4;--mut:#b3a69c;--ac:#e08a72;--ac2:#3b2d27;--bd:#41352f;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.5}
+.wrap{max-width:560px;margin:0 auto;padding:16px}
+.tabs{display:flex;gap:6px;background:var(--ac2);padding:4px;border-radius:12px;margin-bottom:16px}
+.tabs button{flex:1;border:0;background:none;color:var(--mut);padding:9px;border-radius:9px;font:inherit;font-size:14px;cursor:pointer}
+.tabs button.on{background:var(--card);color:var(--tx);font-weight:600}
+.hero{text-align:center;padding:12px 0 18px}
+.hero small{color:var(--mut);letter-spacing:.12em;text-transform:uppercase;font-size:12px}
+.hero h1{font-family:Georgia,serif;font-size:34px;margin:4px 0;color:var(--ac)}
+.hero p{margin:0;color:var(--mut);font-size:14px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:16px;margin-bottom:14px}
+.card h3{margin:0 0 10px;font-size:15px}
+label{display:block;font-size:13px;color:var(--mut);margin-bottom:4px}
+input[type=text],select,textarea{width:100%;padding:11px;border:1px solid var(--bd);border-radius:10px;background:var(--bg);color:var(--tx);font:inherit;font-size:15px}
+textarea{min-height:90px;resize:vertical}
+.row{display:flex;gap:10px}.row>div{flex:1}
+.btn{display:inline-block;border:1px dashed var(--ac);color:var(--ac);background:var(--ac2);padding:11px 14px;border-radius:10px;font:inherit;font-size:14px;cursor:pointer;width:100%;text-align:center}
+.btn.rec{background:#c0392b;color:#fff;border-style:solid;border-color:#c0392b}
+.primary{border:0;background:var(--ac);color:#fff;padding:14px;border-radius:12px;width:100%;font:inherit;font-weight:600;font-size:16px;cursor:pointer}
+.primary:disabled{opacity:.5}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.chips span{font-size:12px;background:var(--ac2);color:var(--ac);padding:5px 10px;border-radius:20px;cursor:pointer}
+.thumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:10px}
+.thumbs img,.grid img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:8px;display:block}
+.hint{font-size:12px;color:var(--mut);margin-top:6px}
+.err{color:#c0392b;font-size:13px;margin-top:6px}
+audio,video{width:100%;margin-top:8px;border-radius:10px}
+.stats{display:flex;gap:8px;margin-bottom:14px}
+.stats div{flex:1;background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:10px;text-align:center}
+.stats b{display:block;font-size:22px;color:var(--ac)}.stats span{font-size:12px;color:var(--mut)}
+.who{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+.who b{font-size:16px}.who span{font-size:12px;color:var(--mut);background:var(--ac2);padding:2px 8px;border-radius:10px}
+.msg{font-family:Georgia,serif;font-style:italic;margin:6px 0}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px}
+.thanks{text-align:center;padding:40px 10px}.thanks .big{font-size:56px}
+.qr{display:flex;gap:14px;align-items:center}
+.qr svg{flex:none;width:96px;height:96px;background:#fff;padding:6px;border-radius:8px}
+.hide{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="tabs">
+    <button id="t1" class="on" onclick="show('tetamu')">Pandangan Tetamu</button>
+    <button id="t2" onclick="show('pengantin')">Pandangan Pengantin</button>
+  </div>
+
+  <div id="v-tetamu">
+    <div class="hero"><small>Majlis Perkahwinan</small><h1>Aiman &amp; Sarah</h1><p>Tinggalkan kenangan untuk pengantin</p></div>
+    <div id="form">
+      <div class="card">
+        <div class="row">
+          <div><label>Nama anda *</label><input type="text" id="nama" placeholder="cth: Along"></div>
+          <div><label>Meja</label><select id="meja"></select></div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Gambar (maksimum 20)</h3>
+        <label class="btn" for="gambar">Pilih atau ambil gambar</label>
+        <input type="file" id="gambar" accept="image/*" multiple class="hide">
+        <div class="thumbs" id="thumbs"></div><div class="hint" id="gcount">Belum ada gambar</div>
+      </div>
+      <div class="card">
+        <h3>Ucapan</h3>
+        <div class="chips" id="chips"></div>
+        <textarea id="mesej" maxlength="1500" placeholder="Tulis ucapan anda..."></textarea>
+      </div>
+      <div class="card">
+        <h3>Voice note (maksimum 30 saat)</h3>
+        <button class="btn" id="recbtn" onclick="toggleRec()">Tekan untuk rakam</button>
+        <audio id="aprev" controls class="hide"></audio><div class="hint" id="rhint"></div>
+      </div>
+      <div class="card">
+        <h3>Video (maksimum 10 saat)</h3>
+        <label class="btn" for="video">Rakam atau pilih video</label>
+        <input type="file" id="video" accept="video/*" class="hide">
+        <video id="vprev" controls playsinline class="hide"></video><div class="err" id="verr"></div>
+      </div>
+      <div class="err" id="ferr"></div>
+      <button class="primary" onclick="hantar()">Hantar Kenangan</button>
+      <p class="hint" style="text-align:center">Dengan menghantar, anda setuju kandungan dikongsi dengan pengantin.</p>
+    </div>
+    <div id="thanks" class="thanks hide"><h2>Terima kasih, <span id="tn"></span>!</h2><p>Kenangan anda sudah selamat sampai kepada pengantin.</p><button class="btn" onclick="reset()">Hantar lagi</button></div>
+  </div>
+
+  <div id="v-pengantin" class="hide">
+    <div class="hero"><small>Dashboard Pengantin</small><h1>Aiman &amp; Sarah</h1></div>
+    <div class="stats"><div><b id="s1">0</b><span>Tetamu</span></div><div><b id="s2">0</b><span>Gambar</span></div><div><b id="s3">0</b><span>Ucapan</span></div><div><b id="s4">0</b><span>Voice/Video</span></div></div>
+    <div class="card qr"><svg viewBox="0 0 21 21" id="qr" shape-rendering="crispEdges"></svg><div><h3>Kad QR meja (hiasan sahaja)</h3><p class="hint" style="margin:0">Setiap meja ada QR sendiri. Imbas akan buka halaman tetamu dengan nombor meja terisi automatik. (Contoh paparan sahaja)</p></div></div>
+    <button class="btn" style="margin-bottom:14px" onclick="alert('Dalam versi sebenar: semua gambar, voice dan video dimuat turun dalam satu fail ZIP.')">Muat turun semua (ZIP)</button>
+    <div id="wall"></div>
+  </div>
+</div>
+
+<script>
+var MAX_IMG=20, entries=[
+ {nama:"Along",meja:"Meja 3",msg:"Tahniah Aiman & Sarah! Semoga kekal hingga ke syurga. Jangan lupa jemput kami makan nasi minyak lagi!",imgs:[],aud:null,vid:null},
+ {nama:"Kak Nah",meja:"Meja 7",msg:"Nasihat Kak Nah: sabar dan banyak bercakap. Rumah tangga ni macam masak, kena sama-sama rasa.",imgs:[],aud:null,vid:null}
+];
+var state={imgs:[],aud:null,vid:null}, rec=null, chunks=[], timer=null;
+var prompts=["Nasihat untuk pengantin baru","Kenangan lucu bersama pengantin","Doa untuk rumah tangga baru"];
+function $(i){return document.getElementById(i)}
+function show(v){
+  $("v-tetamu").classList.toggle("hide",v!=="tetamu");$("v-pengantin").classList.toggle("hide",v!=="pengantin");
+  $("t1").classList.toggle("on",v==="tetamu");$("t2").classList.toggle("on",v==="pengantin");
+  if(v==="pengantin")render();
+}
+(function init(){
+  var s="";for(var i=1;i<=20;i++)s+="<option>Meja "+i+"</option>";$("meja").innerHTML=s;
+  $("chips").innerHTML=prompts.map(function(p){return "<span>"+p+"</span>"}).join("");
+  $("chips").onclick=function(e){if(e.target.tagName==="SPAN"){var t=$("mesej");t.value=(t.value?t.value+"\n":"")+e.target.textContent+": ";t.focus()}};
+  // QR hiasan
+  var q="",seed=7;for(var y=0;y<21;y++)for(var x=0;x<21;x++){var f=(x<7&&y<7)||(x>13&&y<7)||(x<7&&y>13);var on;
+    if(f){var a=x>13?x-14:x,b=y>13?y-14:y;on=a==0||a==6||b==0||b==6||(a>1&&a<5&&b>1&&b<5)}else{seed=(seed*9301+49297)%233280;on=seed/233280>.55}
+    if(on)q+='<rect x="'+x+'" y="'+y+'" width="1" height="1" fill="#000"/>'}
+  $("qr").innerHTML=q;
+})();
+$("gambar").onchange=function(e){
+  var f=Array.prototype.slice.call(e.target.files);
+  f.forEach(function(x){if(state.imgs.length<MAX_IMG)state.imgs.push(URL.createObjectURL(x))});
+  e.target.value="";drawThumbs();
+};
+function drawThumbs(){
+  $("thumbs").innerHTML=state.imgs.map(function(u){return '<img src="'+u+'">'}).join("");
+  $("gcount").textContent=state.imgs.length?state.imgs.length+" / "+MAX_IMG+" gambar dipilih":"Belum ada gambar";
+}
+function toggleRec(){
+  var b=$("recbtn");
+  if(rec&&rec.state==="recording"){rec.stop();return}
+  if(!navigator.mediaDevices||!window.MediaRecorder){$("rhint").textContent="Pelayar ini tidak menyokong rakaman suara.";return}
+  navigator.mediaDevices.getUserMedia({audio:true}).then(function(st){
+    chunks=[];rec=new MediaRecorder(st);
+    rec.ondataavailable=function(e){chunks.push(e.data)};
+    rec.onstop=function(){
+      clearTimeout(timer);st.getTracks().forEach(function(t){t.stop()});
+      state.aud=URL.createObjectURL(new Blob(chunks,{type:rec.mimeType||"audio/webm"}));
+      var a=$("aprev");a.src=state.aud;a.classList.remove("hide");
+      b.classList.remove("rec");b.textContent="Rakam semula";$("rhint").textContent="";
+    };
+    rec.start();b.classList.add("rec");b.textContent="Berhenti (auto berhenti 30s)";
+    timer=setTimeout(function(){if(rec.state==="recording")rec.stop()},30000);
+  }).catch(function(){$("rhint").textContent="Sila benarkan akses mikrofon untuk merakam."});
+}
+$("video").onchange=function(e){
+  var f=e.target.files[0];if(!f)return;$("verr").textContent="";
+  var u=URL.createObjectURL(f),v=document.createElement("video");v.preload="metadata";
+  v.onloadedmetadata=function(){
+    if(v.duration>10.5){$("verr").textContent="Video terlalu panjang ("+Math.round(v.duration)+"s). Maksimum 10 saat.";state.vid=null;$("vprev").classList.add("hide");return}
+    state.vid=u;$("vprev").src=u;$("vprev").classList.remove("hide");
+  };
+  v.src=u;
+};
+function hantar(){
+  var n=$("nama").value.trim(),m=$("mesej").value.trim();
+  if(!n){$("ferr").textContent="Sila isi nama anda dahulu.";$("nama").focus();return}
+  if(!state.imgs.length&&!m&&!state.aud&&!state.vid){$("ferr").textContent="Sila tambah sekurang-kurangnya satu kenangan.";return}
+  $("ferr").textContent="";
+  entries.unshift({nama:n,meja:$("meja").value,msg:m,imgs:state.imgs,aud:state.aud,vid:state.vid});
+  $("tn").textContent=n;$("form").classList.add("hide");$("thanks").classList.remove("hide");
+}
+function reset(){
+  state={imgs:[],aud:null,vid:null};
+  ["mesej"].forEach(function(i){$(i).value=""});
+  drawThumbs();$("aprev").classList.add("hide");$("vprev").classList.add("hide");$("recbtn").textContent="Tekan untuk rakam";
+  $("thanks").classList.add("hide");$("form").classList.remove("hide");window.scrollTo(0,0);
+}
+function esc(s){return s.replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function render(){
+  var im=0,ms=0,md=0;
+  var h=entries.map(function(e,i){
+    im+=e.imgs.length;if(e.msg)ms++;if(e.aud||e.vid)md++;
+    return '<div class="card"><div class="who"><b>'+esc(e.nama)+'</b><span>'+esc(e.meja)+'</span></div>'+
+     (e.msg?'<div class="msg">“'+esc(e.msg)+'”</div>':'')+
+     (e.imgs.length?'<div class="grid">'+e.imgs.map(function(u){return '<img src="'+u+'">'}).join("")+'</div>':'')+
+     (e.aud?'<audio controls src="'+e.aud+'"></audio>':'')+
+     (e.vid?'<video controls playsinline src="'+e.vid+'"></video>':'')+'</div>';
+  }).join("");
+  $("wall").innerHTML=h;$("s1").textContent=entries.length;$("s2").textContent=im;$("s3").textContent=ms;$("s4").textContent=md;
+}
+</script>
+</body>
+</html>
